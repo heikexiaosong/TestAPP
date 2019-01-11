@@ -7,14 +7,14 @@
 
 #define PACKAGE_VERSION "1.0.0"
 
-namespace testapp {
+namespace test {
 
-    class Math {
+    class TestApi {
 
     public:
-        Math();
+        TestApi();
 
-        virtual ~Math();
+        virtual ~TestApi();
 
         /**
          * Returns the version identifier as a static string. Do not delete.

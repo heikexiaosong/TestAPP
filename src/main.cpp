@@ -1,14 +1,14 @@
 #include <iostream>
 
-#include "math/math.h"
+#include "api/test.h"
 
 using namespace std;
 
 int main(int argc, char** argv) {
 
-    testapp::Math math;
+    test::TestApi api;
 
-    std::cout << math.Version() << std::endl;
+    std::cout << api.Version() << std::endl;
 
     return 0;
 }

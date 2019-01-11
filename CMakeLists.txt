@@ -3,9 +3,6 @@ PROJECT (TestAPP)
 
 MESSAGE( STATUS "PROJECT_NAME: " ${PROJECT_NAME} )
 
-include_directories(src)
-include_directories(src/math)
-
 ###############################################################################
 #
 # compiler and linker
@@ -16,8 +13,6 @@ set(LIBRARY_TYPE SHARED)
 if (STATIC)
     set(LIBRARY_TYPE)
 endif()
-
-
 
 ########################################
 # LIBRARY test
@@ -37,21 +32,32 @@ file(GLOB test_src
 #        src/viewer/*.cpp
 #        src/wordrec/*.cpp
         )
-file(GLOB test_hdr
-        src/math/*.h
-        )
+file(GLOB test_hdr src/api/*.h)
 
 
-set(test_src ${test_src}
-        src/math/math.cpp
-        )
+set(test_src ${test_src} src/api/test.cpp)
 
 
 
-add_library                     (libtest ${LIBRARY_TYPE} ${test_src} ${test_hdr}
-        ${tesseract_rsc}
-        )
+add_library                     (libtest ${LIBRARY_TYPE} ${test_src} ${test_hdr} ${tesseract_rsc})
 
+if (NOT STATIC)
+target_compile_definitions      (libtest PRIVATE -DTESS_EXPORTS INTERFACE -DTESS_IMPORTS)
+set_target_properties           (libtest PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS True)
+endif()
+set_target_properties           (libtest PROPERTIES VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH})
+set_target_properties           (libtest PROPERTIES SOVERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH})
+if (WIN32)
+set_target_properties           (libtest PROPERTIES OUTPUT_NAME test${VERSION_MAJOR}${VERSION_MINOR})
+set_target_properties           (libtest PROPERTIES DEBUG_OUTPUT_NAME test${VERSION_MAJOR}${VERSION_MINOR}d)
+else()
+set_target_properties           (libtest PROPERTIES OUTPUT_NAME test)
+endif()
+
+
+########################################
+# EXECUTABLE test
+########################################
 
 set(testmain_src src/main.cpp)
 

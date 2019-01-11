@@ -2,21 +2,21 @@
 // Created by zeus on 1/11/19.
 //
 
-#include "math.h"
+#include "test.h"
 
-namespace testapp {
+namespace test {
 
 
-    Math::Math(){
+    TestApi::TestApi(){
     }
 
-    Math::~Math() {
+    TestApi::~TestApi() {
     }
 
 /**
  * Returns the version identifier as a static string. Do not delete.
  */
-    const char* Math::Version() {
+    const char* TestApi::Version() {
         return PACKAGE_VERSION;
     }
 
